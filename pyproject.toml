@@ -1,0 +1,26 @@
+[project]
+name = "sctypepy"
+version = "0.1.0"
+description = "ScType, but in Python"
+readme = "README.md"
+authors = [
+]
+requires-python = ">=3.12"
+dependencies = [
+    "scanpy",
+    "scipy",
+    "pandas",
+    "numpy",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.setuptools.package-data]
+sctypepy = ["data/*"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.1",
+]
