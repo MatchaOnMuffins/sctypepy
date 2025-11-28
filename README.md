@@ -1,6 +1,9 @@
-# sctypepy
+# ScTypePy: Python implementation of ScType
 
 A Python implementation of [ScType](https://github.com/IanevskiAleksandr/sc-type) for automatic cell type annotation of single-cell RNA-seq data.
+
+ScType is described in the following publication:  
+**Nature Communications (2022):** https://doi.org/10.1038/s41467-022-28803-w
 
 ## Installation
 
