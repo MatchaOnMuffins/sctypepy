@@ -1,6 +1,6 @@
 [project]
 name = "sctypepy"
-version = "0.0.2"
+version = "0.1.0"
 description = "Sc-Type, but in Python"
 readme = "README.md"
 authors = [
@@ -13,18 +13,17 @@ classifiers = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "scanpy",
-    "scipy",
-    "pandas",
-    "numpy",
+    "leidenalg>=0.11.0",
+    "numpy>=2.3.5",
+    "pandas>=2.3.3",
+    "python-igraph>=1.0.0",
+    "scanpy>=1.11.5",
+    "scipy>=1.16.3",
 ]
 
 [build-system]
 requires = ["uv_build>=0.8.22,<0.9.0"]
 build-backend = "uv_build"
-
-[tool.setuptools.package-data]
-sctypepy = ["data/*"]
 
 [dependency-groups]
 dev = [

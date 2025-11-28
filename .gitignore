@@ -4,3 +4,5 @@
 __pycache__/
 example/data
 .ruff_cache
+uv.lock
+dist/
