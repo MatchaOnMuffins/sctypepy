@@ -1,6 +1,6 @@
 [project]
 name = "sctypepy"
-version = "0.0.1"
+version = "0.0.2"
 description = "Sc-Type, but in Python"
 readme = "README.md"
 authors = [
