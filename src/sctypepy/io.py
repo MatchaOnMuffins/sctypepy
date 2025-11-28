@@ -63,7 +63,13 @@ def prepare_gene_sets(
             return []
         return [m.upper() for m in s.split(",") if m and m.lower() != "nan"]
 
-    gs = {row["cellName"]: parse_genes(row["geneSymbolmore1"]) for _, row in cell_markers.iterrows()}
-    gs2 = {row["cellName"]: parse_genes(row["geneSymbolmore2"]) for _, row in cell_markers.iterrows()}
+    gs = {
+        row["cellName"]: parse_genes(row["geneSymbolmore1"])
+        for _, row in cell_markers.iterrows()
+    }
+    gs2 = {
+        row["cellName"]: parse_genes(row["geneSymbolmore2"])
+        for _, row in cell_markers.iterrows()
+    }
 
     return gs, gs2

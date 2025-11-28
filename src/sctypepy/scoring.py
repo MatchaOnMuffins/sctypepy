@@ -37,7 +37,9 @@ def calculate_scores(
     pd.DataFrame
         Scores matrix (n_cells x n_cell_types).
     """
-    var_names = adata.var_names.str.upper() if gene_names_to_uppercase else adata.var_names
+    var_names = (
+        adata.var_names.str.upper() if gene_names_to_uppercase else adata.var_names
+    )
     gene_to_idx = pd.Series(np.arange(len(var_names)), index=var_names)
 
     if not var_names.is_unique:

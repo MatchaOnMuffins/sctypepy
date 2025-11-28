@@ -52,10 +52,16 @@ def auto_detect_tissue_type(
         mean_score = cluster_scores.max(axis=1).mean()
         results.append({"tissue": tissue, "score": mean_score})
 
-    result_df = pd.DataFrame(results).sort_values("score", ascending=False).reset_index(drop=True)
+    result_df = (
+        pd.DataFrame(results)
+        .sort_values("score", ascending=False)
+        .reset_index(drop=True)
+    )
 
     if verbose and len(result_df) > 0:
-        print(f"\nTop tissue type: {result_df.iloc[0]['tissue']} (score: {result_df.iloc[0]['score']:.2f})")
+        print(
+            f"\nTop tissue type: {result_df.iloc[0]['tissue']} (score: {result_df.iloc[0]['score']:.2f})"
+        )
 
     return result_df
 
@@ -89,7 +95,9 @@ def run_sctype(
         print("Tissue type not specified. Auto-detecting...")
         tissue_df = auto_detect_tissue_type(adata, groupby=groupby, db=db, verbose=True)
         if len(tissue_df) == 0:
-            raise ValueError("Could not auto-detect tissue type. Please specify tissue_type.")
+            raise ValueError(
+                "Could not auto-detect tissue type. Please specify tissue_type."
+            )
         tissue_type = tissue_df.iloc[0]["tissue"]
         print(f"Using detected tissue type: {tissue_type}")
 

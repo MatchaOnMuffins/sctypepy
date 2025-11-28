@@ -30,23 +30,43 @@ def simple_adata():
     n_cells, n_genes = 100, 50
 
     gene_names = [
-        "CD3D", "CD3E", "CD4", "CD8A", "CD8B",  # T cell markers
-        "CD19", "CD20", "MS4A1", "CD79A", "CD79B",  # B cell markers
-        "CD14", "CD68", "LYZ", "CST3", "S100A8",  # Monocyte markers
-        "GNLY", "NKG7", "GZMB", "GZMA", "FCGR3A",  # NK cell markers
+        "CD3D",
+        "CD3E",
+        "CD4",
+        "CD8A",
+        "CD8B",  # T cell markers
+        "CD19",
+        "CD20",
+        "MS4A1",
+        "CD79A",
+        "CD79B",  # B cell markers
+        "CD14",
+        "CD68",
+        "LYZ",
+        "CST3",
+        "S100A8",  # Monocyte markers
+        "GNLY",
+        "NKG7",
+        "GZMB",
+        "GZMA",
+        "FCGR3A",  # NK cell markers
     ] + [f"GENE{i}" for i in range(30)]
 
     X = np.random.rand(n_cells, n_genes).astype(np.float32)
     # Create cell type patterns
-    X[0:25, 0:5] += 3.0    # T cells
+    X[0:25, 0:5] += 3.0  # T cells
     X[25:50, 5:10] += 3.0  # B cells
-    X[50:75, 10:15] += 3.0 # Monocytes
-    X[75:100, 15:20] += 3.0 # NK cells
+    X[50:75, 10:15] += 3.0  # Monocytes
+    X[75:100, 15:20] += 3.0  # NK cells
 
     return sc.AnnData(
         X=X,
         obs=pd.DataFrame(
-            {"leiden": pd.Categorical(["0"] * 25 + ["1"] * 25 + ["2"] * 25 + ["3"] * 25)},
+            {
+                "leiden": pd.Categorical(
+                    ["0"] * 25 + ["1"] * 25 + ["2"] * 25 + ["3"] * 25
+                )
+            },
             index=[f"cell_{i}" for i in range(n_cells)],
         ),
         var=pd.DataFrame(index=gene_names),
@@ -108,12 +128,14 @@ class TestIO:
 
     def test_prepare_gene_sets_custom_db(self):
         """Works with custom marker database."""
-        custom_db = pd.DataFrame({
-            "tissueType": ["Custom", "Custom"],
-            "cellName": ["Type A", "Type B"],
-            "geneSymbolmore1": ["GENE1,GENE2", "GENE3"],
-            "geneSymbolmore2": ["GENE5", ""],
-        })
+        custom_db = pd.DataFrame(
+            {
+                "tissueType": ["Custom", "Custom"],
+                "cellName": ["Type A", "Type B"],
+                "geneSymbolmore1": ["GENE1,GENE2", "GENE3"],
+                "geneSymbolmore2": ["GENE5", ""],
+            }
+        )
         gs, gs2 = prepare_gene_sets("Custom", db=custom_db)
         assert gs["Type A"] == ["GENE1", "GENE2"]
         assert gs2["Type B"] == []
@@ -275,16 +297,22 @@ class TestRunSctype:
 
     def test_custom_database(self, simple_adata):
         """Works with custom marker database."""
-        custom_db = pd.DataFrame({
-            "tissueType": ["Custom"] * 4,
-            "cellName": ["T cells", "B cells", "Monocytes", "NK cells"],
-            "geneSymbolmore1": [
-                "CD3D,CD3E,CD4", "CD19,CD20,MS4A1",
-                "CD14,CD68,LYZ", "GNLY,NKG7,GZMB",
-            ],
-            "geneSymbolmore2": ["", "", "", ""],
-        })
-        adata = run_sctype(simple_adata, tissue_type="Custom", groupby="leiden", db=custom_db)
+        custom_db = pd.DataFrame(
+            {
+                "tissueType": ["Custom"] * 4,
+                "cellName": ["T cells", "B cells", "Monocytes", "NK cells"],
+                "geneSymbolmore1": [
+                    "CD3D,CD3E,CD4",
+                    "CD19,CD20,MS4A1",
+                    "CD14,CD68,LYZ",
+                    "GNLY,NKG7,GZMB",
+                ],
+                "geneSymbolmore2": ["", "", "", ""],
+            }
+        )
+        adata = run_sctype(
+            simple_adata, tissue_type="Custom", groupby="leiden", db=custom_db
+        )
         assert "sctype_classification" in adata.obs.columns
 
 
@@ -301,7 +329,10 @@ class TestEdgeCases:
         for n_cells in [1, 50]:
             adata = sc.AnnData(
                 X=np.random.rand(n_cells, 10).astype(np.float32),
-                obs=pd.DataFrame({"c": pd.Categorical(["0"] * n_cells)}, index=[f"c{i}" for i in range(n_cells)]),
+                obs=pd.DataFrame(
+                    {"c": pd.Categorical(["0"] * n_cells)},
+                    index=[f"c{i}" for i in range(n_cells)],
+                ),
                 var=pd.DataFrame(index=[f"G{i}" for i in range(10)]),
             )
             result = run_sctype(adata, tissue_type="Immune system", groupby="c")
