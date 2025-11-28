@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "Sc-Type, but in Python"
 readme = "README.md"
 authors = [
-    { name = "Henry Zhang", email = "zeri@umich.edu"}
+    { name = "Henry Zhang", email = "zeri@umich.edu"},
     { name = "Aleksandr Ianevski", email = "aleksandr.ianevski@helsinki.fi"}
 ]
 license = { file = "LICENSE" }
