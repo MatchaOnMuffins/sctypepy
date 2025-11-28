@@ -72,3 +72,8 @@ After running `run_sctype()`:
 - `adata.obs["sctype_classification"]` — predicted cell type per cell
 - `adata.obsm["sctype_scores"]` — raw scores for each cell type
 
+
+## Authors & Contributions
+
+- **Original ScType algorithm and R implementation:** Aleksandr Ianevski and contributors  
+  https://github.com/IanevskiAleksandr/sc-type
